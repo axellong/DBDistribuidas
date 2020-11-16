@@ -19,11 +19,11 @@ public class DaoAlumno {
         factory=ConexionHibernet.getFactory();
     }
 
-    public void  getAlumno(){
+    public List<Alumno>  getAlumno(){
         Session session = factory.openSession();
         Criteria crit = session.createCriteria(Alumno.class);
-        List listEstado = crit.list();
-        System.out.println(listEstado+"alumno");
+        List<Alumno> listaAlumno = crit.list();
+        return listaAlumno;
 
 
     }

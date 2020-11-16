@@ -57,4 +57,10 @@ public class Ciudad {
         this.nombre = nombre;
         this.listaAlumno = listaAlumno;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+
+    }
 }

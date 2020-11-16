@@ -2,65 +2,144 @@ package controllers;
 
 import dao.DaoAlumno;
 import dao.DaoCiudad;
-import dao.DaoEstado;
+
 import dao.DaoUsuario;
 import hibernate.ConexionHibernet;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.*;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+
+//    these are resources necesaris for the table i would use
+    private ObservableList listaTabla;
+    private List<TableAlumn> alumnosTabla;
+
+
+//    these are the objects of javafx tha i need in order to create mi view
     @FXML
-    private TableView<?> table;
+    private TableView<TableAlumn> table;
 
     @FXML
-    private TableColumn<?, ?> idColum;
+    private TableColumn<Integer, Integer> idC;
 
     @FXML
-    private TableColumn<?, ?> nombreColum;
+    private TableColumn<Alumno, String> nombreC;
 
     @FXML
-    private TableColumn<?, ?> ciudadColumb;
+    private TableColumn<Ciudad, String> ciuadadC;
 
     @FXML
-    private TableColumn<?, ?> estadoColum;
+    private TableColumn<Estado, String> estadoC;
+
+    @FXML
+    private TableColumn<Usuario, String> usuarioC;
 
     @FXML
     private Button buscar;
 
-    @FXML
-    void BuscarAlumnos(ActionEvent event) {
 
-    }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+//      here i do it inivisble a button i going to use latter
+        buscar.setVisible(false);
+
+//      here i initialize my arraylist of objectos of tableAlumns to full my table and also initialize my observable list
+        alumnosTabla = new ArrayList<TableAlumn>();
+        listaTabla = FXCollections.observableArrayList();
+
+//      here i call my method join that join all my databse in order to i can used to full my table
+        join();
+
+//      here i full muy table
+        this.idC.setCellValueFactory(new PropertyValueFactory("id"));
+        this.nombreC.setCellValueFactory(new PropertyValueFactory("alumno"));
+        this.usuarioC.setCellValueFactory(new PropertyValueFactory("usuario"));
+        this.ciuadadC.setCellValueFactory(new PropertyValueFactory("ciudad"));
+        this.estadoC.setCellValueFactory(new PropertyValueFactory("estado"));
+        listaTabla.addAll(alumnosTabla);
+        table.setItems(listaTabla);
+    }
+
+    public void join() {
+//      here i put mi variable tha i will use to join my 3 databses
+        ArrayList<TableAlumn> joined = new ArrayList<>();
+
+//      here i get mi cities from my database postrges
         ConexionHibernet.setDriver("postgres");
-        DaoEstado daoEstado = new DaoEstado();
-        daoEstado.getEstado();
         DaoCiudad daoCiudad = new DaoCiudad();
-        daoCiudad.getCiudad();
+        List<Ciudad> listaCiudad = daoCiudad.getCiudad();
+        int ciudades = listaCiudad.size();
 
-
-        System.out.println("termina ña bd de postgres");
-
-
+//      here i get mi alumns of my databse mysql
         ConexionHibernet.setDriver("mysql");
         DaoAlumno daoAlumno = new DaoAlumno();
-        daoAlumno.getAlumno();
-        System.out.println("termina ña bd de mysql");
+        List<Alumno> listaAlumno = daoAlumno.getAlumno();
+        int alumnos = listaAlumno.size();
+
+
+
+//        this for join alumnos and cities and estates
+        for (int i = 0; i < alumnos; i++) {
+
+            TableAlumn newAlumn = new TableAlumn();
+            newAlumn.setAlumno(listaAlumno.get(i));
+            joined.add(newAlumn);
+
+            for (int x = 0; x < ciudades; x++) {
+
+                if (listaAlumno.get(i).getIdCiudad() == listaCiudad.get(x).getIdCiudad()) {
+                  joined.get(i).setCiudad(listaCiudad.get(x));
+                    System.out.println(joined.get(i));
+                }
+            }
+        }
+
+
+//      here i get my users from my databese sqlServer
         ConexionHibernet.setDriver("sqlServer");
         DaoUsuario daoUsuario = new DaoUsuario();
-        daoUsuario.getUsuario();
-        System.out.println("termina ña bd de sql");
+        List<Usuario> listaUsuario = daoUsuario.getUsuario();
+        int usuarios = listaUsuario.size();
+
+
+//        here i join my alumns and users
+        for (int i = 0; i < alumnos; i++) {
+            for (int x = 0; x < usuarios; x++) {
+                if (listaAlumno.get(i).getIdUsuario() == listaUsuario.get(x).getIdUsuario()) {
+                    joined.get(i).setUsuairo(listaUsuario.get(i));
+                    System.out.println(joined.get(i));
+                }
+            }
+        }
+
+
+//       here i pass my table from joined to my observable list
+        for (TableAlumn x:joined){
+          alumnosTabla.add(x);
+        }
+
+//        System.out.println(alumnosTabla);
+
+
+
     }
+
+
 }

@@ -18,11 +18,11 @@ public class DaoUsuario {
         factory=ConexionHibernet.getFactory();
     }
 
-    public void  getUsuario(){
+    public List<Usuario>  getUsuario(){
         Session session = factory.openSession();
         Criteria crit = session.createCriteria(Usuario.class);
-        List listEstado = crit.list();
-        System.out.println(listEstado+"Usuario");
+        List<Usuario> list = crit.list();
+        return list;
 
 
     }

@@ -19,11 +19,12 @@ public class DaoCiudad {
         factory=ConexionHibernet.getFactory();
     }
 
-    public void  getCiudad(){
+    public List<Ciudad>  getCiudad(){
         Session session = factory.openSession();
         Criteria crit = session.createCriteria(Ciudad.class);
-        List listEstado = crit.list();
-        System.out.println(listEstado+"ciudad");
+        List <Ciudad> listaCiudad = crit.list();
+
+        return  listaCiudad;
 
 
     }
