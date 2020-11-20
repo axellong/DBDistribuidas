@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="model">
+    <class name="Ciudad" table="ciudad">
+
+        <id name="idCiudad"
+            column="idCiudad"
+            type="java.lang.Integer"
+            unsaved-value="null" >
+            <generator class="native">
+            </generator>
+        </id>
+
+        <property name="nombre" column="nombre"/>
+
+        <many-to-one name="idEstado" class="Estado" fetch="select">
+            <column name="idEstado" not-null="true" />
+        </many-to-one>
+
+
+    </class>
+</hibernate-mapping>

@@ -1,8 +1,10 @@
 package model;
 
+import java.util.Objects;
+
 public class TableAlumn {
 
-    private Estado estado;
+    private Estado estado = null;
     private int id;
     private Alumno alumno;
     private Usuario usuario;
@@ -58,7 +60,6 @@ public class TableAlumn {
 
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
-        this.estado = ciudad.getIdEstado();
     }
 
     @Override

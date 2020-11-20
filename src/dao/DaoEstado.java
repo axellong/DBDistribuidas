@@ -18,13 +18,16 @@ public class DaoEstado {
         factory=ConexionHibernet.getFactory();
     }
 
-    public void  getEstado(){
+    public List<Estado> getEstado(){
         Session session = factory.openSession();
         Criteria crit = session.createCriteria(Estado.class);
         List listEstado = crit.list();
-        System.out.println(listEstado+"estado");
+        System.out.println(listEstado);
+        session.close();
 
 
+
+        return listEstado;
     }
 
 

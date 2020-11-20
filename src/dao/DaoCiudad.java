@@ -2,7 +2,7 @@ package dao;
 
 import hibernate.ConexionHibernet;
 import model.Ciudad;
-import model.Estado;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +23,6 @@ public class DaoCiudad {
         Session session = factory.openSession();
         Criteria crit = session.createCriteria(Ciudad.class);
         List <Ciudad> listaCiudad = crit.list();
-
         return  listaCiudad;
 
 

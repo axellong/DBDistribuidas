@@ -27,6 +27,6 @@
             <TableColumn fx:id="usuarioC" prefWidth="115.0" text="Usuario" />
          </columns>
       </TableView>
-      <Button fx:id="buscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="468.0" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="buscar" mnemonicParsing="false" onAction="#BuscarOA" prefHeight="25.0" prefWidth="468.0" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>
