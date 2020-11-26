@@ -133,14 +133,10 @@ public class Controller implements Initializable {
 
 //      aqui uno los alumnos con los estados
         for (int i = 0; i < alumnos; i++) {
-
             for (int x = 0; x < estados; x++) {
-
                 if (joined.get(i).getCiudad().getIdEstado().getIdEstado() == listaEstado.get(x).getIdEstado()) {
                     joined.get(i).setEstado(listaEstado.get(x));
                 }
-
-
             }
         }
 
@@ -148,7 +144,7 @@ public class Controller implements Initializable {
 //        here i join my alumns and users
         for (int i = 0; i < alumnos; i++) {
             for (int x = 0; x < usuarios; x++) {
-                if (listaAlumno.get(i).getIdUsuario() == listaUsuario.get(x).getIdUsuario()) {
+                if (listaAlumno.get(i).getIdUsuario()  ==listaUsuario.get(x).getIdUsuario()) {
                     joined.get(i).setUsuairo(listaUsuario.get(i));
                     System.out.println(joined.get(i));
                 }
