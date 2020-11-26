@@ -1,10 +1,8 @@
 package dao;
 
 import hibernate.ConectionSqlMaster;
-import model.TableAlumn;
 import model.TableAlumnMaster;
 
-import javax.persistence.Table;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
