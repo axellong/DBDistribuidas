@@ -1,10 +1,7 @@
 package controllers;
 
-import dao.DaoAlumno;
-import dao.DaoCiudad;
+import dao.*;
 
-import dao.DaoEstado;
-import dao.DaoUsuario;
 import hibernate.ConexionHibernet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,35 +24,35 @@ public class Controller implements Initializable {
 
 
     //    these are resources necesaris for the table i would use
-    private ObservableList listaTabla;
-    private List<TableAlumn> alumnosTabla;
+    private ObservableList<TableAlumnMaster> listaTabla;
+    private List<TableAlumnMaster> alumnosTabla;
 
 
     //    these are the objects of javafx tha i need in order to create mi view
     @FXML
-    private TableView<TableAlumn> table;
+    private TableView<TableAlumnMaster> table;
 
     @FXML
     private TableColumn<Integer, Integer> idC;
 
     @FXML
-    private TableColumn<Alumno, String> nombreC;
+    private TableColumn<String, String> nombreC;
 
     @FXML
-    private TableColumn<Ciudad, String> ciuadadC;
+    private TableColumn<String, String> ciuadadC;
 
     @FXML
-    private TableColumn<Estado, String> estadoC;
+    private TableColumn<String, String> estadoC;
 
     @FXML
-    private TableColumn<Usuario, String> usuarioC;
+    private TableColumn<String, String> usuarioC;
 
     @FXML
     private Button buscar;
 
     @FXML
     void BuscarOA(ActionEvent event) {
-        alumnosTabla.clear();
+    /*    alumnosTabla.clear();
         listaTabla.clear();
         table.getItems().clear();
         join();
@@ -67,7 +64,13 @@ public class Controller implements Initializable {
         this.ciuadadC.setCellValueFactory(new PropertyValueFactory("ciudad"));
         this.estadoC.setCellValueFactory(new PropertyValueFactory("estado"));
         listaTabla.addAll(alumnosTabla);
-        table.setItems(listaTabla);
+        table.setItems(listaTabla);*/
+        listaTabla.clear();
+        DaoMaster daoMaster = new DaoMaster();
+        alumnosTabla=daoMaster.getAllUsers();
+        listaTabla.addAll(alumnosTabla);
+
+
 
     }
 
@@ -77,10 +80,19 @@ public class Controller implements Initializable {
 
 
 //      here i initialize my arraylist of objectos of tableAlumns to full my table and also initialize my observable list
-        alumnosTabla = new ArrayList<TableAlumn>();
+        alumnosTabla = new ArrayList<>();
         listaTabla = FXCollections.observableArrayList();
 
-//      here i call my method join that join all my databse in order to i can used to full my table
+        this.idC.setCellValueFactory(new PropertyValueFactory("idAlumno"));
+        this.nombreC.setCellValueFactory(new PropertyValueFactory("nombreAlumno"));
+        this.usuarioC.setCellValueFactory(new PropertyValueFactory("usuario"));
+        this.ciuadadC.setCellValueFactory(new PropertyValueFactory("ciudad"));
+        this.estadoC.setCellValueFactory(new PropertyValueFactory("Estado"));
+        listaTabla.addAll(alumnosTabla);
+        table.setItems(listaTabla);
+
+
+
 
     }
 
@@ -154,7 +166,7 @@ public class Controller implements Initializable {
 
 //       here i pass my table from joined to my observable list
         for (TableAlumn x : joined) {
-            alumnosTabla.add(x);
+//            alumnosTabla.add(x);
         }
 
 //        System.out.println(alumnosTabla);
